@@ -1,12 +1,7 @@
 "use client";
 
-import { useGroupScores } from "@/lib/storage";
-import {
-  groupStandings,
-  hasGroupData,
-  wildcardSlugs,
-  type Standing,
-} from "@/lib/scoring";
+import { useVoting } from "@/lib/voting";
+import { type Standing } from "@/lib/scoring";
 import { GROUP_NAMES, type Group } from "@/config/teams";
 
 function rowAccent(position: number, isWildcard: boolean): string {
@@ -39,10 +34,9 @@ function statusColor(position: number, isWildcard: boolean): string {
 }
 
 export default function GroupTable({ group }: { group: Group }) {
-  const { value: scores, mounted } = useGroupScores();
-  const standings = groupStandings(scores, group);
-  const hasData = mounted && hasGroupData(scores, group);
-  const wc = mounted ? wildcardSlugs(scores) : new Set<string>();
+  const { standings: all, wildcards: wc, groupHasData, configured } = useVoting();
+  const standings = all.byGroup[group];
+  const hasData = configured && groupHasData(group);
 
   return (
     <div className="hairline bg-white">

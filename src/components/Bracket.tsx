@@ -1,106 +1,13 @@
 "use client";
 
+import { useSession } from "@/lib/storage";
 import {
-  useGroupScores,
-  useBracket,
-  useSession,
-  setBracket,
-  type BracketState,
-} from "@/lib/storage";
-import { quarterfinals, teamFlag, teamName } from "@/lib/scoring";
-
-interface SlotData {
-  slug: string | null;
-  label: string;
-}
-
-function Slot({
-  data,
-  isWinner,
-  canPick,
-  onPick,
-  gold,
-}: {
-  data: SlotData;
-  isWinner: boolean;
-  canPick: boolean;
-  onPick: () => void;
-  gold?: boolean;
-}) {
-  const has = !!data.slug;
-  const base =
-    "flex items-center justify-between px-4 py-3 transition-colors w-full text-left";
-  const state = isWinner
-    ? gold
-      ? "bg-gold/15 text-wine font-normal"
-      : "bg-advance/10 text-advance"
-    : "text-ink/80";
-  const interactive = canPick && has ? "hover:bg-ink/5 cursor-pointer" : "";
-
-  const inner = (
-    <>
-      <span className="flex items-center gap-3 min-w-0">
-        <span className="text-xl leading-none">
-          {has ? teamFlag(data.slug!) : "🏳️"}
-        </span>
-        <span className="truncate text-sm">
-          {has ? teamName(data.slug!) : "TBD"}
-        </span>
-      </span>
-      <span className="text-[9px] uppercase tracking-cinematic text-ink/45 shrink-0">
-        {isWinner ? "ADV" : data.label}
-      </span>
-    </>
-  );
-
-  if (canPick && has) {
-    return (
-      <button onClick={onPick} className={`${base} ${state} ${interactive}`}>
-        {inner}
-      </button>
-    );
-  }
-  return <div className={`${base} ${state}`}>{inner}</div>;
-}
-
-function Match({
-  home,
-  away,
-  winner,
-  canPick,
-  onPick,
-  gold,
-}: {
-  home: SlotData;
-  away: SlotData;
-  winner: string | null;
-  canPick: boolean;
-  onPick: (slug: string) => void;
-  gold?: boolean;
-}) {
-  return (
-    <div
-      className={`bg-white ${
-        gold ? "border border-gold" : "hairline"
-      } divide-y divide-[rgba(55,32,52,0.14)]`}
-    >
-      <Slot
-        data={home}
-        isWinner={!!winner && winner === home.slug}
-        canPick={canPick}
-        onPick={() => home.slug && onPick(home.slug)}
-        gold={gold}
-      />
-      <Slot
-        data={away}
-        isWinner={!!winner && winner === away.slug}
-        canPick={canPick}
-        onPick={() => away.slug && onPick(away.slug)}
-        gold={gold}
-      />
-    </div>
-  );
-}
+  useVoting,
+  canVoteMatch,
+  type MatchView,
+  type Round,
+} from "@/lib/voting";
+import { teamFlag, teamName } from "@/lib/scoring";
 
 function Column({
   title,
@@ -110,7 +17,7 @@ function Column({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex-1 min-w-[220px]">
+    <div className="flex-1 min-w-[260px]">
       <p className="text-[10px] uppercase tracking-wide2 text-wine mb-6">
         {title}
       </p>
@@ -119,70 +26,192 @@ function Column({
   );
 }
 
-export default function Bracket() {
-  const { value: scores } = useGroupScores();
-  const { value: bracket, mounted } = useBracket();
+function SlotRow({
+  slug,
+  label,
+  votes,
+  isWinner,
+  canVote,
+  myPick,
+  onVote,
+  gold,
+}: {
+  slug?: string;
+  label: string;
+  votes: number;
+  isWinner: boolean;
+  canVote: boolean;
+  myPick: boolean;
+  onVote: () => void;
+  gold?: boolean;
+}) {
+  const has = !!slug;
+  const winState = isWinner
+    ? gold
+      ? "bg-gold/15 text-wine"
+      : "bg-advance/10 text-advance"
+    : "text-ink/80";
+
+  const inner = (
+    <>
+      <span className="flex items-center gap-3 min-w-0">
+        <span className="text-xl leading-none">{has ? teamFlag(slug!) : "🏳️"}</span>
+        <span className="truncate text-sm">{has ? teamName(slug!) : "TBD"}</span>
+        {myPick && (
+          <span className="text-[8px] uppercase tracking-cinematic text-wine border border-wine/40 rounded-full px-1.5 py-0.5">
+            Your pick
+          </span>
+        )}
+      </span>
+      <span className="flex items-center gap-3 shrink-0">
+        <span className="text-sm tabular-nums text-ink/60">{votes}</span>
+        <span className="text-[9px] uppercase tracking-cinematic text-ink/35 w-7 text-right">
+          {isWinner ? "ADV" : label}
+        </span>
+      </span>
+    </>
+  );
+
+  const base =
+    "flex items-center justify-between px-4 py-3 transition-colors w-full text-left";
+
+  if (canVote && has) {
+    return (
+      <button
+        onClick={onVote}
+        className={`${base} ${winState} ${
+          myPick ? "" : "hover:bg-ink/5"
+        } cursor-pointer`}
+      >
+        {inner}
+      </button>
+    );
+  }
+  return <div className={`${base} ${winState}`}>{inner}</div>;
+}
+
+function Match({ m, gold }: { m: MatchView; gold?: boolean }) {
   const { session } = useSession();
+  const { phases, castMatchVote, setOverride, clearOverride, voteFor } =
+    useVoting();
+
   const isAdmin = session?.role === "admin";
+  const myTeam = session?.role === "team" ? session.team : null;
+  const phaseOpen = phases[m.round] === "open";
+  const phaseClosed = phases[m.round] === "closed";
 
-  const qf = quarterfinals(scores);
+  const eligible =
+    !!myTeam && phaseOpen && !!m.home && !!m.away && canVoteMatch(myTeam, m);
+  const iAmIn = !!myTeam && (myTeam === m.home || myTeam === m.away);
+  const myPick = myTeam ? voteFor(myTeam, m.round, m.matchId) : null;
 
-  // Quarter-final winners (validated against actual participants).
-  const qfWinners = qf.map((m, i) => {
-    const w = bracket.qf[i] ?? null;
-    if (w && (w === m.home.slug || w === m.away.slug)) return w;
-    return null;
-  });
-
-  // Semi-final pairings come from QF winners.
-  const sfMatches: [SlotData, SlotData][] = [
-    [
-      { slug: qfWinners[0], label: "QF1" },
-      { slug: qfWinners[1], label: "QF2" },
-    ],
-    [
-      { slug: qfWinners[2], label: "QF3" },
-      { slug: qfWinners[3], label: "QF4" },
-    ],
-  ];
-
-  const sfWinners = sfMatches.map((m, i) => {
-    const w = bracket.sf[i] ?? null;
-    if (w && (w === m[0].slug || w === m[1].slug)) return w;
-    return null;
-  });
-
-  const finalMatch: [SlotData, SlotData] = [
-    { slug: sfWinners[0], label: "SF1" },
-    { slug: sfWinners[1], label: "SF2" },
-  ];
-
-  const finalWinner =
-    bracket.final &&
-    (bracket.final === finalMatch[0].slug ||
-      bracket.final === finalMatch[1].slug)
-      ? bracket.final
-      : null;
-
-  function persist(next: BracketState) {
-    setBracket(next);
+  function vote(slug?: string) {
+    if (!myTeam || !slug) return;
+    castMatchVote(myTeam, m.round, m.matchId, slug);
   }
 
-  function pickQF(i: number, slug: string) {
-    const qfNext = [...bracket.qf];
-    qfNext[i] = slug;
-    persist({ ...bracket, qf: qfNext });
-  }
-  function pickSF(i: number, slug: string) {
-    const sfNext = [...bracket.sf];
-    sfNext[i] = slug;
-    persist({ ...bracket, sf: sfNext });
-  }
-  function pickFinal(slug: string) {
-    persist({ ...bracket, final: slug });
+  // Admin needs to resolve when the round is closed (or tied) with no winner.
+  const needsAdmin =
+    isAdmin && !!m.home && !!m.away && !m.winner && (phaseClosed || m.tie);
+
+  return (
+    <div className="space-y-2">
+      <div
+        className={`bg-white ${
+          gold ? "border border-gold" : "hairline"
+        } divide-y divide-[rgba(55,32,52,0.14)]`}
+      >
+        <SlotRow
+          slug={m.home}
+          label={m.homeLabel}
+          votes={m.homeVotes}
+          isWinner={m.winner === m.home && !!m.home}
+          canVote={eligible}
+          myPick={!!myPick && myPick === m.home}
+          onVote={() => vote(m.home)}
+          gold={gold}
+        />
+        <SlotRow
+          slug={m.away}
+          label={m.awayLabel}
+          votes={m.awayVotes}
+          isWinner={m.winner === m.away && !!m.away}
+          canVote={eligible}
+          myPick={!!myPick && myPick === m.away}
+          onVote={() => vote(m.away)}
+          gold={gold}
+        />
+      </div>
+
+      {/* contextual footer */}
+      <div className="px-1 flex items-center justify-between gap-2 min-h-[16px]">
+        <span className="text-[9px] uppercase tracking-cinematic text-ink/40">
+          {iAmIn
+            ? "You're in this match"
+            : m.totalVotes > 0
+            ? `${m.totalVotes} vote${m.totalVotes === 1 ? "" : "s"}`
+            : phaseOpen
+            ? "Awaiting votes"
+            : ""}
+        </span>
+        {m.overridden && (
+          <span className="text-[9px] uppercase tracking-cinematic text-wine">
+            Admin pick
+          </span>
+        )}
+        {m.tie && !m.overridden && (
+          <span className="text-[9px] uppercase tracking-cinematic text-eliminate">
+            Tied
+          </span>
+        )}
+      </div>
+
+      {/* admin tie-break / manual advance */}
+      {needsAdmin && (
+        <div className="flex flex-wrap items-center gap-2 px-1">
+          <span className="text-[9px] uppercase tracking-cinematic text-ink/50">
+            Advance:
+          </span>
+          <button
+            onClick={() => setOverride(m.round, m.matchId, m.home!)}
+            className="text-[9px] uppercase tracking-cinematic px-2 py-1 hairline hover:border-wine hover:text-wine"
+          >
+            {teamName(m.home)}
+          </button>
+          <button
+            onClick={() => setOverride(m.round, m.matchId, m.away!)}
+            className="text-[9px] uppercase tracking-cinematic px-2 py-1 hairline hover:border-wine hover:text-wine"
+          >
+            {teamName(m.away)}
+          </button>
+        </div>
+      )}
+      {isAdmin && m.overridden && (
+        <button
+          onClick={() => clearOverride(m.round, m.matchId)}
+          className="text-[9px] uppercase tracking-cinematic text-ink/40 hover:text-eliminate px-1"
+        >
+          Clear admin pick
+        </button>
+      )}
+    </div>
+  );
+}
+
+export default function Bracket() {
+  const { matches, champion, configured, loading } = useVoting();
+
+  if (!configured) {
+    return (
+      <div className="hairline bg-white px-6 py-16 text-center">
+        <p className="text-ink/55 text-sm uppercase tracking-cinematic">
+          Voting backend not configured
+        </p>
+      </div>
+    );
   }
 
-  if (!mounted) {
+  if (loading) {
     return (
       <div className="px-6 py-20 text-center text-ink/40 text-xs uppercase tracking-cinematic">
         Loading bracket…
@@ -190,65 +219,35 @@ export default function Bracket() {
     );
   }
 
+  const round = (r: Round) => matches[r];
+
   return (
-    <div className="space-y-12">
-      {isAdmin && (
-        <p className="text-[10px] uppercase tracking-cinematic text-wine">
-          Admin · tap a nation to advance it
-        </p>
-      )}
+    <div className="flex gap-6 md:gap-10 overflow-x-auto no-scrollbar pb-4">
+      <Column title="Quarter-Finals">
+        {round("qf").map((m) => (
+          <Match key={m.matchId} m={m} />
+        ))}
+      </Column>
 
-      <div className="flex gap-6 md:gap-10 overflow-x-auto no-scrollbar pb-4">
-        {/* QUARTER-FINALS */}
-        <Column title="Quarter-Finals">
-          {qf.map((m, i) => (
-            <Match
-              key={m.id}
-              home={{ slug: m.home.slug ?? null, label: m.home.label }}
-              away={{ slug: m.away.slug ?? null, label: m.away.label }}
-              winner={qfWinners[i]}
-              canPick={isAdmin}
-              onPick={(slug) => pickQF(i, slug)}
-            />
-          ))}
-        </Column>
+      <Column title="Semi-Finals">
+        {round("sf").map((m) => (
+          <Match key={m.matchId} m={m} />
+        ))}
+      </Column>
 
-        {/* SEMI-FINALS */}
-        <Column title="Semi-Finals">
-          {sfMatches.map((m, i) => (
-            <Match
-              key={`sf${i}`}
-              home={m[0]}
-              away={m[1]}
-              winner={sfWinners[i]}
-              canPick={isAdmin}
-              onPick={(slug) => pickSF(i, slug)}
-            />
-          ))}
-        </Column>
-
-        {/* FINAL */}
-        <Column title="Final">
-          <Match
-            home={finalMatch[0]}
-            away={finalMatch[1]}
-            winner={finalWinner}
-            canPick={isAdmin}
-            onPick={pickFinal}
-            gold
-          />
-          {finalWinner && (
-            <div className="text-center pt-2">
-              <p className="text-[10px] uppercase tracking-wide2 text-ink/50">
-                Champion
-              </p>
-              <p className="heading text-2xl text-wine mt-2">
-                {teamFlag(finalWinner)} {teamName(finalWinner)}
-              </p>
-            </div>
-          )}
-        </Column>
-      </div>
+      <Column title="Final">
+        <Match m={round("final")[0]} gold />
+        {champion && (
+          <div className="text-center pt-2">
+            <p className="text-[10px] uppercase tracking-wide2 text-ink/50">
+              Champion
+            </p>
+            <p className="heading text-2xl text-wine mt-2">
+              {teamFlag(champion)} {teamName(champion)}
+            </p>
+          </div>
+        )}
+      </Column>
     </div>
   );
 }

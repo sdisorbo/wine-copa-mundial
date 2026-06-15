@@ -6,16 +6,15 @@ import { useEffect, useState } from "react";
 import {
   useSession,
   useWines,
-  useGroupScores,
   setWines,
   emptyWineSet,
   type Wine,
   type WineSet,
 } from "@/lib/storage";
+import { useVoting } from "@/lib/voting";
 import { getTeam, GROUP_NAMES } from "@/config/teams";
 import { countryColor } from "@/config/colors";
 import { teamImage, teamMap } from "@/config/images";
-import { groupStandings, hasGroupData } from "@/lib/scoring";
 
 const BUDGET = 100;
 
@@ -23,7 +22,7 @@ export default function TeamProfile({ slug }: { slug: string }) {
   const team = getTeam(slug);
   const { session, mounted } = useSession();
   const { value: wines } = useWines(slug);
-  const { value: scores } = useGroupScores();
+  const { standings, groupHasData: hasGroupDataFn, configured } = useVoting();
 
   if (!team) {
     return (
@@ -52,9 +51,8 @@ export default function TeamProfile({ slug }: { slug: string }) {
   const pct = Math.min(100, Math.round((spent / BUDGET) * 100));
   const over = spent > BUDGET;
 
-  const standings = groupStandings(scores, team.group);
-  const myStanding = standings.find((s) => s.slug === slug);
-  const groupHasData = mounted && hasGroupData(scores, team.group);
+  const myStanding = standings.bySlug.get(slug);
+  const groupHasData = configured && hasGroupDataFn(team.group);
 
   return (
     <div style={{ borderTop: `2px solid ${accent}` }}>
