@@ -87,7 +87,7 @@ export default function ScoreEntry() {
             }}
             className={`flex-1 py-3 text-xs uppercase tracking-cinematic transition-colors ${
               g === group
-                ? "text-gold bg-black"
+                ? "text-gold bg-inkdeep"
                 : "text-bone/40 hover:text-bone"
             }`}
           >

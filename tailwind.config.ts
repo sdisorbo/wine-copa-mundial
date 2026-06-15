@@ -10,7 +10,8 @@ const config: Config = {
       colors: {
         wine: "#9b2226",
         gold: "#e9c46a",
-        ink: "#0a0a0a",
+        ink: "#372034",
+        inkdeep: "#281725",
         bone: "#f0ede8",
         // Tournament status colors
         advance: "#2dd4bf", // teal

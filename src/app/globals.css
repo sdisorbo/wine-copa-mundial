@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --ink: #0a0a0a;
+  --ink: #372034;
+  --inkdeep: #281725;
   --bone: #f0ede8;
   --gold: #e9c46a;
   --wine: #9b2226;

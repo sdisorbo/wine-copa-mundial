@@ -40,7 +40,7 @@ export default function AboutPage() {
       {SECTIONS.map((s, i) => (
         <section
           key={s.n}
-          className={`hairline-t ${i % 2 === 1 ? "bg-black" : ""}`}
+          className={`hairline-t ${i % 2 === 1 ? "bg-inkdeep" : ""}`}
         >
           <div className="max-w-page mx-auto px-6 py-20 grid md:grid-cols-[200px_1fr] gap-10 md:gap-20 items-start">
             <div className="heading text-7xl md:text-8xl text-gold/30 leading-none">

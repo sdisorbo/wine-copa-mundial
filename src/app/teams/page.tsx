@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import PageHeader from "@/components/PageHeader";
 import { TEAMS, GROUP_NAMES } from "@/config/teams";
 import { countryColor } from "@/config/colors";
+import { teamImage } from "@/config/images";
 
 export const metadata: Metadata = {
   title: "Teams · Wine Copa Mundial",
@@ -15,20 +17,34 @@ export default function TeamsPage() {
 
       <section className="px-6 pb-24">
         <div className="max-w-page mx-auto grid gap-px bg-[rgba(255,255,255,0.15)] hairline sm:grid-cols-2 lg:grid-cols-3">
-          {TEAMS.map((t) => (
+          {TEAMS.map((t) => {
+            const img = teamImage(t.slug);
+            return (
             <Link
               key={t.slug}
               href={`/teams/${t.slug}`}
-              className="group relative bg-ink p-8 flex flex-col gap-6 hover:bg-black transition-colors"
+              className="group relative bg-ink p-8 flex flex-col gap-6 hover:bg-inkdeep transition-colors overflow-hidden"
               style={{ borderTop: `2px solid ${countryColor(t.slug)}` }}
             >
-              <div className="flex items-start justify-between">
+              {img && (
+                <>
+                  <Image
+                    src={img}
+                    alt=""
+                    fill
+                    sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+                    className="object-cover opacity-20 group-hover:opacity-30 transition-opacity"
+                  />
+                  <div className="absolute inset-0 bg-ink/60" />
+                </>
+              )}
+              <div className="relative flex items-start justify-between">
                 <span className="text-6xl leading-none">{t.flag}</span>
                 <span className="text-[10px] uppercase tracking-cinematic text-bone/40 border-hair hairline rounded-full px-3 py-1">
                   Group {t.group}
                 </span>
               </div>
-              <div>
+              <div className="relative">
                 <h2 className="heading text-2xl text-bone group-hover:text-gold transition-colors">
                   {t.name}
                 </h2>
@@ -36,11 +52,12 @@ export default function TeamsPage() {
                   {GROUP_NAMES[t.group]}
                 </p>
               </div>
-              <span className="text-[10px] uppercase tracking-cinematic text-bone/30 group-hover:text-bone/60 mt-auto">
+              <span className="relative text-[10px] uppercase tracking-cinematic text-bone/30 group-hover:text-bone/60 mt-auto">
                 View profile →
               </span>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </section>
     </>

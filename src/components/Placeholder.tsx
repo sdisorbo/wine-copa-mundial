@@ -1,5 +1,5 @@
 /**
- * Image slot placeholder. Renders a solid #111 block with a centered label.
+ * Image slot placeholder. Renders a solid dark block with a centered label.
  *
  * To swap in a real image later, replace the inner <div> with next/image:
  *
@@ -19,7 +19,7 @@ export default function Placeholder({
 }) {
   return (
     <div
-      className={`relative w-full ${ratio} bg-[#111] hairline overflow-hidden ${className}`}
+      className={`relative w-full ${ratio} bg-inkdeep hairline overflow-hidden ${className}`}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="text-[11px] uppercase tracking-cinematic text-bone/30">

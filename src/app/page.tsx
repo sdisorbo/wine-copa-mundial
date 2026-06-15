@@ -1,22 +1,26 @@
 import Link from "next/link";
-import Placeholder from "@/components/Placeholder";
+import Image from "next/image";
 import FlagStrip from "@/components/FlagStrip";
+import { HERO_IMAGE, BREAK_IMAGE } from "@/config/images";
 
 export default function Home() {
   return (
     <>
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background image slot */}
+        {/* Background image */}
         <div className="absolute inset-0">
-          <Placeholder
-            label="[ hero image ]"
-            ratio="h-full"
-            className="h-full"
+          <Image
+            src={HERO_IMAGE}
+            alt="San Fermín — the wine-soaked crowd of Pamplona"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
         </div>
-        {/* Darken layer (pure darkness, no gradient) */}
-        <div className="absolute inset-0 bg-ink/70" />
+        {/* Darken layer (flat wine tint, no gradient) */}
+        <div className="absolute inset-0 bg-ink/75" />
 
         <div className="relative z-10 text-center px-6">
           <p className="text-xs md:text-sm uppercase tracking-wide2 text-gold mb-8">
@@ -86,7 +90,16 @@ export default function Home() {
 
       {/* FULL-WIDTH IMAGE BREAK */}
       <section className="px-0">
-        <Placeholder label="[ tasting hall image ]" ratio="aspect-[21/9]" />
+        <div className="relative w-full aspect-[21/9]">
+          <Image
+            src={BREAK_IMAGE}
+            alt="Vineyard rows at the edge of the world"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-ink/40" />
+        </div>
       </section>
 
       {/* FLAG STRIP */}

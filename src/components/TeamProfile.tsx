@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   useSession,
@@ -13,6 +14,7 @@ import {
 } from "@/lib/storage";
 import { getTeam, GROUP_NAMES } from "@/config/teams";
 import { countryColor } from "@/config/colors";
+import { teamImage } from "@/config/images";
 import { groupStandings, hasGroupData } from "@/lib/scoring";
 
 const BUDGET = 100;
@@ -40,6 +42,7 @@ export default function TeamProfile({ slug }: { slug: string }) {
   }
 
   const accent = countryColor(slug);
+  const backdrop = teamImage(slug);
   const isAdmin = session?.role === "admin";
   const isOwner = session?.role === "team" && session.team === slug;
   const canSee = mounted && (isAdmin || isOwner);
@@ -55,8 +58,23 @@ export default function TeamProfile({ slug }: { slug: string }) {
   return (
     <div style={{ borderTop: `2px solid ${accent}` }}>
       {/* HERO */}
-      <section className="px-6 pt-28 pb-16">
-        <div className="max-w-page mx-auto">
+      <section className="relative px-6 pt-28 pb-16 overflow-hidden">
+        {backdrop && (
+          <>
+            <div className="absolute inset-0">
+              <Image
+                src={backdrop}
+                alt={`${team.name} wine country`}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute inset-0 bg-ink/80" />
+          </>
+        )}
+        <div className="relative max-w-page mx-auto">
           <span className="text-7xl md:text-8xl leading-none block">
             {team.flag}
           </span>
