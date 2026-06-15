@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0a0a0a;
+  --bone: #f0ede8;
+  --gold: #e9c46a;
+  --wine: #9b2226;
+  --hair: rgba(255, 255, 255, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Hide scrollbars on horizontal strips while keeping scroll behavior */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Cinematic heading helper */
+.heading {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 300;
+}
+
+/* Thin gold rule */
+.gold-rule {
+  height: 1px;
+  background: var(--gold);
+  border: 0;
+}
+
+/* Hairline border utility (0.5px feel) */
+.hairline {
+  border: 0.5px solid var(--hair);
+}
+.hairline-t {
+  border-top: 0.5px solid var(--hair);
+}
+.hairline-b {
+  border-bottom: 0.5px solid var(--hair);
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
