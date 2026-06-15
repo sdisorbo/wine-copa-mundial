@@ -6,11 +6,11 @@ export const COUNTRY_COLORS: Record<string, string> = {
   argentina: "#74ACDF",
   chile: "#D52B1E",
   "south-africa": "#007A4D",
-  california: "#003DA5",
+  usa: "#3C3B6E",
   spain: "#c60b1e",
   austria: "#ED2939",
   georgia: "#FF0000",
-  washington: "#004F9F",
+  "new-zealand": "#00247D",
 };
 
 export function countryColor(slug: string): string {

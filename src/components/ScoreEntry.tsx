@@ -68,9 +68,9 @@ export default function ScoreEntry() {
   }
 
   return (
-    <div className="hairline">
+    <div className="hairline bg-white">
       <div className="px-6 py-5 hairline-b flex items-center justify-between">
-        <span className="heading text-bone">Score Entry</span>
+        <span className="heading text-ink">Score Entry</span>
         <span className="text-[10px] uppercase tracking-cinematic text-wine">
           Admin
         </span>
@@ -87,8 +87,8 @@ export default function ScoreEntry() {
             }}
             className={`flex-1 py-3 text-xs uppercase tracking-cinematic transition-colors ${
               g === group
-                ? "text-gold bg-inkdeep"
-                : "text-bone/40 hover:text-bone"
+                ? "text-wine bg-paper2"
+                : "text-ink/45 hover:text-ink"
             }`}
           >
             Group {g}
@@ -97,26 +97,26 @@ export default function ScoreEntry() {
       </div>
 
       <div className="p-6 space-y-8">
-        <p className="text-[11px] uppercase tracking-cinematic text-bone/40">
+        <p className="text-[11px] uppercase tracking-cinematic text-ink/50">
           {GROUP_NAMES[group]}
         </p>
 
         {/* New ballot form */}
         <div className="space-y-5">
           <div>
-            <label className="block text-[10px] uppercase tracking-cinematic text-bone/50 mb-2">
+            <label className="block text-[10px] uppercase tracking-cinematic text-ink/55 mb-2">
               Guest name
             </label>
             <input
               value={guest}
               onChange={(e) => setGuest(e.target.value)}
               placeholder="e.g. Table 4 — Dana"
-              className="w-full bg-transparent hairline px-4 py-3 text-sm text-bone placeholder:text-bone/25 focus:outline-none focus:border-gold"
+              className="w-full bg-transparent hairline px-4 py-3 text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-wine"
             />
           </div>
 
           <div className="space-y-2">
-            <span className="block text-[10px] uppercase tracking-cinematic text-bone/50">
+            <span className="block text-[10px] uppercase tracking-cinematic text-ink/55">
               Rank the wines (1 = favorite)
             </span>
             {teams.map((t) => (
@@ -124,7 +124,7 @@ export default function ScoreEntry() {
                 key={t.slug}
                 className="flex items-center justify-between hairline px-4 py-3"
               >
-                <span className="flex items-center gap-3 text-sm text-bone">
+                <span className="flex items-center gap-3 text-sm text-ink">
                   <span className="text-xl">{t.flag}</span>
                   {t.name}
                 </span>
@@ -133,7 +133,7 @@ export default function ScoreEntry() {
                   onChange={(e) =>
                     setRanks((r) => ({ ...r, [t.slug]: e.target.value }))
                   }
-                  className="bg-ink hairline px-3 py-2 text-sm text-bone focus:outline-none focus:border-gold"
+                  className="bg-white hairline px-3 py-2 text-sm text-ink focus:outline-none focus:border-wine"
                 >
                   <option value="">—</option>
                   {teams.map((_, i) => (
@@ -153,13 +153,13 @@ export default function ScoreEntry() {
           <div className="flex gap-3">
             <button
               onClick={addBallot}
-              className="text-xs uppercase tracking-cinematic px-6 py-3 hairline hover:border-gold hover:text-gold transition-colors"
+              className="text-xs uppercase tracking-cinematic px-6 py-3 hairline hover:border-wine hover:text-wine transition-colors"
             >
               Add Ballot
             </button>
             <button
               onClick={resetForm}
-              className="text-xs uppercase tracking-cinematic px-6 py-3 text-bone/40 hover:text-bone transition-colors"
+              className="text-xs uppercase tracking-cinematic px-6 py-3 text-ink/45 hover:text-ink transition-colors"
             >
               Clear
             </button>
@@ -168,11 +168,11 @@ export default function ScoreEntry() {
 
         {/* Existing ballots */}
         <div>
-          <span className="block text-[10px] uppercase tracking-cinematic text-bone/50 mb-3">
+          <span className="block text-[10px] uppercase tracking-cinematic text-ink/55 mb-3">
             Ballots in Group {group} · {ballotNames.length}
           </span>
           {ballotNames.length === 0 ? (
-            <p className="text-xs text-bone/30">No ballots recorded yet.</p>
+            <p className="text-xs text-ink/45">No ballots recorded yet.</p>
           ) : (
             <ul className="space-y-px">
               {ballotNames.map((name) => (
@@ -180,9 +180,9 @@ export default function ScoreEntry() {
                   key={name}
                   className="flex items-center justify-between hairline px-4 py-3"
                 >
-                  <span className="text-sm text-bone min-w-0 truncate">
+                  <span className="text-sm text-ink min-w-0 truncate">
                     {name}
-                    <span className="text-bone/40 ml-3">
+                    <span className="text-ink/45 ml-3">
                       {ballots[name]
                         .map((slug) => teams.find((t) => t.slug === slug)?.flag)
                         .join(" ")}

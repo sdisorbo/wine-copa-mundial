@@ -19,11 +19,11 @@ export default function Home() {
             className="object-cover"
           />
         </div>
-        {/* Darken layer (flat wine tint, no gradient) */}
-        <div className="absolute inset-0 bg-ink/75" />
+        {/* Darken layer (flat neutral tint, no gradient) */}
+        <div className="absolute inset-0 bg-shade/65" />
 
         <div className="relative z-10 text-center px-6">
-          <p className="text-xs md:text-sm uppercase tracking-wide2 text-gold mb-8">
+          <p className="text-xs md:text-sm uppercase tracking-wide2 text-goldlt mb-8">
             Blind Tasting · World Cup
           </p>
           <h1 className="heading text-5xl sm:text-7xl md:text-8xl text-bone leading-[0.95]">
@@ -31,14 +31,14 @@ export default function Home() {
             <br />
             Mundial
           </h1>
-          <div className="gold-rule w-40 mx-auto my-10" />
+          <div className="gold-rule-bright w-40 mx-auto my-10" />
           <p className="text-base md:text-xl tracking-cinematic uppercase text-bone/70">
             12 Nations. One Champion.
           </p>
           <div className="mt-12">
             <Link
               href="/groups"
-              className="inline-block text-xs uppercase tracking-wide2 px-10 py-4 hairline hover:border-gold hover:text-gold transition-colors"
+              className="inline-block text-xs uppercase tracking-wide2 px-10 py-4 text-bone hairline-light hover:border-goldlt hover:text-goldlt transition-colors"
             >
               Enter the Tournament
             </Link>
@@ -46,7 +46,7 @@ export default function Home() {
         </div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-cinematic text-bone/30">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-cinematic text-bone/40">
           Scroll
         </div>
       </section>
@@ -55,10 +55,10 @@ export default function Home() {
       <section className="hairline-t">
         <div className="max-w-page mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 md:gap-20">
           <div>
-            <p className="text-xs uppercase tracking-wide2 text-gold/80 mb-6">
+            <p className="text-xs uppercase tracking-wide2 text-wine mb-6">
               The Tournament
             </p>
-            <h2 className="heading text-3xl md:text-5xl text-bone leading-tight">
+            <h2 className="heading text-3xl md:text-5xl text-ink leading-tight">
               Twelve nations.
               <br />
               Thirty-six bottles.
@@ -66,7 +66,7 @@ export default function Home() {
               One blind verdict.
             </h2>
           </div>
-          <div className="flex flex-col justify-center gap-6 text-bone/70 text-lg font-light">
+          <div className="flex flex-col justify-center gap-6 text-ink/75 text-lg font-light">
             <p>
               Two-person teams represent the great wine nations of the world.
               Each fields three bottles under a strict hundred-dollar budget,
@@ -80,7 +80,7 @@ export default function Home() {
             </p>
             <Link
               href="/about"
-              className="text-xs uppercase tracking-cinematic text-gold hover:text-bone transition-colors w-fit"
+              className="text-xs uppercase tracking-cinematic text-wine hover:text-ink transition-colors w-fit"
             >
               Read the format →
             </Link>
@@ -93,12 +93,12 @@ export default function Home() {
         <div className="relative w-full aspect-[21/9]">
           <Image
             src={BREAK_IMAGE}
-            alt="Vineyard rows at the edge of the world"
+            alt="Vineyard rows at golden hour"
             fill
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-ink/40" />
+          <div className="absolute inset-0 bg-shade/25" />
         </div>
       </section>
 
@@ -107,23 +107,23 @@ export default function Home() {
 
       {/* CLOSING CTA */}
       <section className="px-6 py-28 text-center">
-        <h2 className="heading text-3xl md:text-5xl text-bone">
+        <h2 className="heading text-3xl md:text-5xl text-ink">
           The cellar is set.
         </h2>
-        <p className="mt-6 text-bone/60 max-w-xl mx-auto">
+        <p className="mt-6 text-ink/65 max-w-xl mx-auto">
           Follow the group stage, track the bracket, and find out which nation
           pours the champion.
         </p>
         <div className="mt-10 flex flex-wrap gap-4 justify-center">
           <Link
             href="/groups"
-            className="text-xs uppercase tracking-wide2 px-8 py-4 hairline hover:border-gold hover:text-gold transition-colors"
+            className="text-xs uppercase tracking-wide2 px-8 py-4 hairline hover:border-wine hover:text-wine transition-colors"
           >
             View Groups
           </Link>
           <Link
             href="/bracket"
-            className="text-xs uppercase tracking-wide2 px-8 py-4 hairline hover:border-gold hover:text-gold transition-colors"
+            className="text-xs uppercase tracking-wide2 px-8 py-4 hairline hover:border-wine hover:text-wine transition-colors"
           >
             View Bracket
           </Link>

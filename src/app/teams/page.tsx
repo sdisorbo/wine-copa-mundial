@@ -33,26 +33,26 @@ export default function TeamsPage() {
                     alt=""
                     fill
                     sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
-                    className="object-cover opacity-20 group-hover:opacity-30 transition-opacity"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-ink/60" />
+                  <div className="absolute inset-0 bg-shade/55 group-hover:bg-shade/45 transition-colors" />
                 </>
               )}
               <div className="relative flex items-start justify-between">
-                <span className="text-6xl leading-none">{t.flag}</span>
-                <span className="text-[10px] uppercase tracking-cinematic text-bone/40 border-hair hairline rounded-full px-3 py-1">
+                <span className="text-6xl leading-none drop-shadow">{t.flag}</span>
+                <span className="text-[10px] uppercase tracking-cinematic text-bone/80 hairline-light rounded-full px-3 py-1">
                   Group {t.group}
                 </span>
               </div>
               <div className="relative">
-                <h2 className="heading text-2xl text-bone group-hover:text-gold transition-colors">
+                <h2 className="heading text-2xl text-bone group-hover:text-goldlt transition-colors">
                   {t.name}
                 </h2>
-                <p className="text-[10px] uppercase tracking-cinematic text-bone/40 mt-2">
+                <p className="text-[10px] uppercase tracking-cinematic text-bone/65 mt-2">
                   {GROUP_NAMES[t.group]}
                 </p>
               </div>
-              <span className="relative text-[10px] uppercase tracking-cinematic text-bone/30 group-hover:text-bone/60 mt-auto">
+              <span className="relative text-[10px] uppercase tracking-cinematic text-bone/55 group-hover:text-bone/90 mt-auto">
                 View profile →
               </span>
             </Link>

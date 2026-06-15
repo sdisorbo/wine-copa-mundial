@@ -32,10 +32,10 @@ function Slot({
     "flex items-center justify-between px-4 py-3 transition-colors w-full text-left";
   const state = isWinner
     ? gold
-      ? "bg-gold/10 text-gold"
+      ? "bg-gold/15 text-wine font-normal"
       : "bg-advance/10 text-advance"
-    : "text-bone/80";
-  const interactive = canPick && has ? "hover:bg-white/5 cursor-pointer" : "";
+    : "text-ink/80";
+  const interactive = canPick && has ? "hover:bg-ink/5 cursor-pointer" : "";
 
   const inner = (
     <>
@@ -47,7 +47,7 @@ function Slot({
           {has ? teamName(data.slug!) : "TBD"}
         </span>
       </span>
-      <span className="text-[9px] uppercase tracking-cinematic text-bone/30 shrink-0">
+      <span className="text-[9px] uppercase tracking-cinematic text-ink/45 shrink-0">
         {isWinner ? "ADV" : data.label}
       </span>
     </>
@@ -80,9 +80,9 @@ function Match({
 }) {
   return (
     <div
-      className={`${
+      className={`bg-white ${
         gold ? "border border-gold" : "hairline"
-      } divide-y divide-[rgba(255,255,255,0.12)]`}
+      } divide-y divide-[rgba(55,32,52,0.14)]`}
     >
       <Slot
         data={home}
@@ -111,7 +111,7 @@ function Column({
 }) {
   return (
     <div className="flex-1 min-w-[220px]">
-      <p className="text-[10px] uppercase tracking-wide2 text-gold/70 mb-6">
+      <p className="text-[10px] uppercase tracking-wide2 text-wine mb-6">
         {title}
       </p>
       <div className="flex flex-col justify-around gap-8 h-full">{children}</div>
@@ -184,7 +184,7 @@ export default function Bracket() {
 
   if (!mounted) {
     return (
-      <div className="px-6 py-20 text-center text-bone/30 text-xs uppercase tracking-cinematic">
+      <div className="px-6 py-20 text-center text-ink/40 text-xs uppercase tracking-cinematic">
         Loading bracket…
       </div>
     );
@@ -239,10 +239,10 @@ export default function Bracket() {
           />
           {finalWinner && (
             <div className="text-center pt-2">
-              <p className="text-[10px] uppercase tracking-wide2 text-bone/40">
+              <p className="text-[10px] uppercase tracking-wide2 text-ink/50">
                 Champion
               </p>
-              <p className="heading text-2xl text-gold mt-2">
+              <p className="heading text-2xl text-wine mt-2">
                 {teamFlag(finalWinner)} {teamName(finalWinner)}
               </p>
             </div>

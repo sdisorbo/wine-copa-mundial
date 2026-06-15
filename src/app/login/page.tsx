@@ -55,18 +55,18 @@ export default function LoginPage() {
   return (
     <section className="min-h-screen flex items-center justify-center px-6 pt-16">
       <div
-        className="w-full max-w-md hairline p-8 md:p-12"
+        className="w-full max-w-md hairline bg-white p-8 md:p-12"
         style={{ borderTop: `2px solid ${accent}` }}
       >
-        <p className="text-xs uppercase tracking-wide2 text-gold/80 mb-4">
+        <p className="text-xs uppercase tracking-wide2 text-wine mb-4">
           {team ? `${team.flag} ${team.name}` : "Restricted Access"}
         </p>
-        <h1 className="heading text-3xl md:text-4xl text-bone">Team Login</h1>
+        <h1 className="heading text-3xl md:text-4xl text-ink">Team Login</h1>
         <div className="h-px w-16 mt-6 mb-10" style={{ background: accent }} />
 
         <form onSubmit={submit} className="space-y-6">
           <div>
-            <label className="block text-[10px] uppercase tracking-cinematic text-bone/50 mb-2">
+            <label className="block text-[10px] uppercase tracking-cinematic text-ink/55 mb-2">
               Identity
             </label>
             <select
@@ -75,7 +75,7 @@ export default function LoginPage() {
                 setSelected(e.target.value);
                 setError("");
               }}
-              className="w-full bg-ink hairline px-4 py-3 text-sm text-bone focus:outline-none focus:border-gold"
+              className="w-full bg-white hairline px-4 py-3 text-sm text-ink focus:outline-none focus:border-wine"
             >
               <option value="">Select team…</option>
               {TEAMS.map((t) => (
@@ -88,7 +88,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-[10px] uppercase tracking-cinematic text-bone/50 mb-2">
+            <label className="block text-[10px] uppercase tracking-cinematic text-ink/55 mb-2">
               PIN
             </label>
             <input
@@ -101,7 +101,7 @@ export default function LoginPage() {
                 setError("");
               }}
               placeholder="••••"
-              className="w-full bg-transparent hairline px-4 py-3 text-sm text-bone tracking-[0.4em] placeholder:tracking-normal placeholder:text-bone/25 focus:outline-none focus:border-gold"
+              className="w-full bg-transparent hairline px-4 py-3 text-sm text-ink tracking-[0.4em] placeholder:tracking-normal placeholder:text-ink/30 focus:outline-none focus:border-wine"
             />
           </div>
 
@@ -111,13 +111,13 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full text-xs uppercase tracking-wide2 py-4 hairline hover:border-gold hover:text-gold transition-colors"
+            className="w-full text-xs uppercase tracking-wide2 py-4 hairline hover:border-wine hover:text-wine transition-colors"
           >
             Enter
           </button>
         </form>
 
-        <p className="text-[10px] uppercase tracking-cinematic text-bone/30 mt-8 leading-relaxed">
+        <p className="text-[10px] uppercase tracking-cinematic text-ink/45 mt-8 leading-relaxed">
           Teams see only their own lineup. Admin manages scores and the bracket.
         </p>
       </div>

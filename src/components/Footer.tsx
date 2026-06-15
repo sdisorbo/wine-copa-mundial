@@ -5,10 +5,10 @@ export default function Footer() {
     <footer className="hairline-t mt-24">
       <div className="max-w-page mx-auto px-6 py-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-          <div className="heading text-bone tracking-[0.3em]">
+          <div className="heading text-ink tracking-[0.3em]">
             WINE COPA MUNDIAL
           </div>
-          <p className="text-xs text-bone/40 mt-2 tracking-wide">
+          <p className="text-xs text-ink/50 mt-2 tracking-wide">
             12 Nations. One Champion.
           </p>
         </div>
@@ -23,7 +23,7 @@ export default function Footer() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-xs uppercase tracking-cinematic text-bone/50 hover:text-gold transition-colors"
+              className="text-xs uppercase tracking-cinematic text-ink/55 hover:text-wine transition-colors"
             >
               {l.label}
             </Link>
@@ -31,7 +31,7 @@ export default function Footer() {
         </nav>
       </div>
       <div className="max-w-page mx-auto px-6 pb-8">
-        <p className="text-[10px] uppercase tracking-cinematic text-bone/25">
+        <p className="text-[10px] uppercase tracking-cinematic text-ink/40">
           A blind tasting tournament · Est. 2026
         </p>
       </div>

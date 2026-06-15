@@ -27,7 +27,7 @@ export default function GroupsPage() {
           {LEGEND.map((l) => (
             <span key={l.label} className="flex items-center gap-2">
               <span className={`inline-block w-3 h-3 ${l.color}`} />
-              <span className="text-[10px] uppercase tracking-cinematic text-bone/50">
+              <span className="text-[10px] uppercase tracking-cinematic text-ink/60">
                 {l.label}
               </span>
             </span>
@@ -56,7 +56,7 @@ export default function GroupsPage() {
       {/* Note */}
       <section className="px-6 pb-24">
         <div className="max-w-page mx-auto hairline-t pt-8">
-          <p className="text-xs text-bone/40 tracking-wide max-w-2xl">
+          <p className="text-xs text-ink/60 tracking-wide max-w-2xl">
             Top two nations per group advance automatically. The two best
             third-place finishers across all groups claim the wildcard berths —
             completing the eight-team bracket.

@@ -28,12 +28,12 @@ export default function TeamProfile({ slug }: { slug: string }) {
   if (!team) {
     return (
       <div className="px-6 py-40 text-center">
-        <p className="text-bone/50 uppercase tracking-cinematic text-sm">
+        <p className="text-ink/55 uppercase tracking-cinematic text-sm">
           Unknown nation.
         </p>
         <Link
           href="/teams"
-          className="text-gold text-xs uppercase tracking-cinematic mt-6 inline-block"
+          className="text-wine text-xs uppercase tracking-cinematic mt-6 inline-block"
         >
           ← Back to teams
         </Link>
@@ -71,7 +71,7 @@ export default function TeamProfile({ slug }: { slug: string }) {
                 className="object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-ink/80" />
+            <div className="absolute inset-0 bg-shade/65" />
           </>
         )}
         <div className="relative max-w-page mx-auto">
@@ -88,7 +88,7 @@ export default function TeamProfile({ slug }: { slug: string }) {
             >
               Group {team.group}
             </span>
-            <span className="text-[10px] uppercase tracking-cinematic text-bone/40">
+            <span className="text-[10px] uppercase tracking-cinematic text-bone/65">
               {GROUP_NAMES[team.group]}
             </span>
           </div>
@@ -101,50 +101,50 @@ export default function TeamProfile({ slug }: { slug: string }) {
         <div className="max-w-page mx-auto grid lg:grid-cols-[1fr_320px] gap-12">
           {/* LEFT — wines */}
           <div>
-            <p className="text-xs uppercase tracking-wide2 text-gold/80 mb-8">
+            <p className="text-xs uppercase tracking-wide2 text-wine mb-8">
               Wine Lineup
             </p>
 
             {!canSee ? (
-              <div className="hairline px-8 py-16 text-center">
+              <div className="hairline bg-white px-8 py-16 text-center">
                 <p className="text-3xl mb-4">🔒</p>
-                <p className="text-bone/50 uppercase tracking-cinematic text-sm">
+                <p className="text-ink/55 uppercase tracking-cinematic text-sm">
                   Wines hidden until tasting
                 </p>
                 {mounted && !session && (
                   <Link
                     href="/login"
-                    className="text-gold text-xs uppercase tracking-cinematic mt-6 inline-block hover:text-bone"
+                    className="text-wine text-xs uppercase tracking-cinematic mt-6 inline-block hover:text-ink"
                   >
                     Team login →
                   </Link>
                 )}
               </div>
             ) : (
-              <div className="space-y-px bg-[rgba(255,255,255,0.15)] hairline">
+              <div className="space-y-px bg-[rgba(55,32,52,0.16)] hairline">
                 {wines.map((w, i) => (
                   <div
                     key={i}
-                    className="bg-ink px-6 py-6 flex items-start justify-between gap-6"
+                    className="bg-white px-6 py-6 flex items-start justify-between gap-6"
                   >
                     <div className="flex items-start gap-5 min-w-0">
-                      <span className="heading text-3xl text-bone/20 leading-none">
+                      <span className="heading text-3xl text-ink/20 leading-none">
                         {i + 1}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-bone text-lg">
+                        <p className="text-ink text-lg">
                           {w.name || (
-                            <span className="text-bone/30">Unnamed wine</span>
+                            <span className="text-ink/35">Unnamed wine</span>
                           )}
                         </p>
-                        <p className="text-bone/50 text-sm mt-1">
+                        <p className="text-ink/55 text-sm mt-1">
                           {[w.producer, w.vintage]
                             .filter(Boolean)
                             .join(" · ") || "Producer · Vintage"}
                         </p>
                       </div>
                     </div>
-                    <span className="text-gold tabular-nums shrink-0">
+                    <span className="text-wine tabular-nums shrink-0">
                       {w.price ? `$${w.price}` : "—"}
                     </span>
                   </div>
@@ -160,7 +160,7 @@ export default function TeamProfile({ slug }: { slug: string }) {
           <aside className="space-y-12">
             {/* Budget */}
             <div>
-              <p className="text-xs uppercase tracking-wide2 text-gold/80 mb-6">
+              <p className="text-xs uppercase tracking-wide2 text-wine mb-6">
                 Budget
               </p>
               {canSee ? (
@@ -168,14 +168,14 @@ export default function TeamProfile({ slug }: { slug: string }) {
                   <div className="flex items-baseline justify-between mb-3">
                     <span
                       className={`text-2xl tabular-nums ${
-                        over ? "text-eliminate" : "text-bone"
+                        over ? "text-eliminate" : "text-ink"
                       }`}
                     >
                       ${spent}
                     </span>
-                    <span className="text-bone/40 text-sm">/ ${BUDGET}</span>
+                    <span className="text-ink/50 text-sm">/ ${BUDGET}</span>
                   </div>
-                  <div className="h-1 bg-white/10 w-full">
+                  <div className="h-1 bg-ink/10 w-full">
                     <div
                       className={`h-full ${
                         over ? "bg-eliminate" : "bg-gold"
@@ -190,17 +190,17 @@ export default function TeamProfile({ slug }: { slug: string }) {
                   )}
                 </>
               ) : (
-                <p className="text-bone/30 text-sm">Hidden until tasting.</p>
+                <p className="text-ink/45 text-sm">Hidden until tasting.</p>
               )}
             </div>
 
             {/* Group results */}
             <div>
-              <p className="text-xs uppercase tracking-wide2 text-gold/80 mb-6">
+              <p className="text-xs uppercase tracking-wide2 text-wine mb-6">
                 Group Stage
               </p>
               {groupHasData && myStanding ? (
-                <dl className="space-y-px bg-[rgba(255,255,255,0.15)] hairline">
+                <dl className="space-y-px bg-[rgba(55,32,52,0.16)] hairline">
                   {[
                     { k: "Position", v: `${myStanding.position} of 4` },
                     { k: "Points", v: myStanding.points },
@@ -210,23 +210,23 @@ export default function TeamProfile({ slug }: { slug: string }) {
                   ].map((row) => (
                     <div
                       key={row.k}
-                      className="bg-ink px-5 py-3 flex justify-between"
+                      className="bg-white px-5 py-3 flex justify-between"
                     >
-                      <dt className="text-[11px] uppercase tracking-cinematic text-bone/50">
+                      <dt className="text-[11px] uppercase tracking-cinematic text-ink/55">
                         {row.k}
                       </dt>
-                      <dd className="text-bone tabular-nums">{row.v}</dd>
+                      <dd className="text-ink tabular-nums">{row.v}</dd>
                     </div>
                   ))}
                 </dl>
               ) : (
-                <p className="text-bone/30 text-sm">
+                <p className="text-ink/45 text-sm">
                   No group results recorded yet.
                 </p>
               )}
               <Link
                 href="/groups"
-                className="text-gold text-[10px] uppercase tracking-cinematic mt-6 inline-block hover:text-bone"
+                className="text-wine text-[10px] uppercase tracking-cinematic mt-6 inline-block hover:text-ink"
               >
                 View Group {team.group} →
               </Link>
@@ -281,12 +281,12 @@ function WineEditor({ slug, initial }: { slug: string; initial: WineSet }) {
   const total = draft.reduce((s, w) => s + (Number(w.price) || 0), 0);
 
   return (
-    <form onSubmit={save} className="mt-12 hairline p-6 md:p-8 space-y-8">
+    <form onSubmit={save} className="mt-12 hairline bg-white p-6 md:p-8 space-y-8">
       <div className="flex items-center justify-between">
-        <span className="heading text-bone">Edit Wines</span>
+        <span className="heading text-ink">Edit Wines</span>
         <span
           className={`text-xs tabular-nums ${
-            total > 100 ? "text-eliminate" : "text-bone/50"
+            total > 100 ? "text-eliminate" : "text-ink/55"
           }`}
         >
           ${total} / $100
@@ -295,7 +295,7 @@ function WineEditor({ slug, initial }: { slug: string; initial: WineSet }) {
 
       {draft.map((w, i) => (
         <div key={i} className="space-y-3">
-          <p className="text-[10px] uppercase tracking-cinematic text-gold/70">
+          <p className="text-[10px] uppercase tracking-cinematic text-wine">
             Wine {i + 1}
           </p>
           <div className="grid sm:grid-cols-2 gap-3">
@@ -303,19 +303,19 @@ function WineEditor({ slug, initial }: { slug: string; initial: WineSet }) {
               value={w.name}
               onChange={(e) => update(i, "name", e.target.value)}
               placeholder="Wine name"
-              className="bg-transparent hairline px-4 py-3 text-sm text-bone placeholder:text-bone/25 focus:outline-none focus:border-gold"
+              className="bg-transparent hairline px-4 py-3 text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-wine"
             />
             <input
               value={w.producer}
               onChange={(e) => update(i, "producer", e.target.value)}
               placeholder="Producer"
-              className="bg-transparent hairline px-4 py-3 text-sm text-bone placeholder:text-bone/25 focus:outline-none focus:border-gold"
+              className="bg-transparent hairline px-4 py-3 text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-wine"
             />
             <input
               value={w.vintage}
               onChange={(e) => update(i, "vintage", e.target.value)}
               placeholder="Vintage"
-              className="bg-transparent hairline px-4 py-3 text-sm text-bone placeholder:text-bone/25 focus:outline-none focus:border-gold"
+              className="bg-transparent hairline px-4 py-3 text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-wine"
             />
             <input
               type="number"
@@ -323,7 +323,7 @@ function WineEditor({ slug, initial }: { slug: string; initial: WineSet }) {
               value={w.price === 0 ? "" : w.price}
               onChange={(e) => update(i, "price", e.target.value)}
               placeholder="Price ($)"
-              className="bg-transparent hairline px-4 py-3 text-sm text-bone placeholder:text-bone/25 focus:outline-none focus:border-gold"
+              className="bg-transparent hairline px-4 py-3 text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-wine"
             />
           </div>
         </div>
@@ -332,14 +332,14 @@ function WineEditor({ slug, initial }: { slug: string; initial: WineSet }) {
       <div className="flex items-center gap-4">
         <button
           type="submit"
-          className="text-xs uppercase tracking-cinematic px-6 py-3 hairline hover:border-gold hover:text-gold transition-colors"
+          className="text-xs uppercase tracking-cinematic px-6 py-3 hairline hover:border-wine hover:text-wine transition-colors"
         >
           Save Lineup
         </button>
         <button
           type="button"
           onClick={reset}
-          className="text-xs uppercase tracking-cinematic px-6 py-3 text-bone/40 hover:text-bone transition-colors"
+          className="text-xs uppercase tracking-cinematic px-6 py-3 text-ink/45 hover:text-ink transition-colors"
         >
           Clear
         </button>

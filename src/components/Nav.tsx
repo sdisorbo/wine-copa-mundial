@@ -15,25 +15,15 @@ const LINKS = [
 ];
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const { session, mounted } = useSession();
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   // Close mobile menu on route change
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
-
-  const solid = scrolled || open;
 
   const team = session?.role === "team" ? getTeam(session.team) : undefined;
   const loggedIn = mounted && !!session;
@@ -44,11 +34,8 @@ export default function Nav() {
   }
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-        solid ? "bg-ink hairline-b" : "bg-transparent"
-      }`}
-    >
+    <header className="fixed top-0 inset-x-0 z-50 bg-ink hairline-light-b">
+
       <div className="max-w-page mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link
@@ -68,7 +55,7 @@ export default function Nav() {
                 key={l.href}
                 href={l.href}
                 className={`text-xs uppercase tracking-cinematic transition-colors ${
-                  active ? "text-gold" : "text-bone/70 hover:text-bone"
+                  active ? "text-goldlt" : "text-bone/70 hover:text-bone"
                 }`}
               >
                 {l.label}
@@ -81,7 +68,7 @@ export default function Nav() {
         <div className="hidden md:flex items-center gap-4">
           {loggedIn ? (
             <>
-              <span className="text-xs uppercase tracking-cinematic text-gold">
+              <span className="text-xs uppercase tracking-cinematic text-goldlt">
                 {session?.role === "admin"
                   ? "Admin"
                   : team
@@ -98,7 +85,7 @@ export default function Nav() {
           ) : (
             <Link
               href="/login"
-              className="text-xs uppercase tracking-cinematic px-5 py-2 hairline hover:border-gold hover:text-gold transition-colors"
+              className="text-xs uppercase tracking-cinematic px-5 py-2 hairline-light hover:border-goldlt hover:text-goldlt transition-colors"
             >
               Login
             </Link>
@@ -131,7 +118,7 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {open && (
-        <nav className="md:hidden bg-ink hairline-t px-6 py-6 flex flex-col gap-5">
+        <nav className="md:hidden bg-ink hairline-light-t px-6 py-6 flex flex-col gap-5">
           {LINKS.map((l) => (
             <Link
               key={l.href}
@@ -141,11 +128,11 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
-          <div className="gold-rule my-2" />
+          <div className="gold-rule-bright my-2" />
           {loggedIn ? (
             <button
               onClick={handleLogout}
-              className="text-left text-sm uppercase tracking-cinematic text-gold"
+              className="text-left text-sm uppercase tracking-cinematic text-goldlt"
             >
               Logout
               {session?.role === "admin"
@@ -157,7 +144,7 @@ export default function Nav() {
           ) : (
             <Link
               href="/login"
-              className="text-sm uppercase tracking-cinematic text-gold"
+              className="text-sm uppercase tracking-cinematic text-goldlt"
             >
               Login
             </Link>

@@ -3,12 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --ink: #372034;
+  --paper: #f0ede8; /* off-white page background */
+  --ink: #372034; /* deep wine-purple: header + primary text */
   --inkdeep: #281725;
-  --bone: #f0ede8;
-  --gold: #e9c46a;
+  --bone: #f0ede8; /* light text on dark surfaces */
+  --gold: #b8862f; /* accent on light */
+  --goldlt: #e9c46a; /* bright gold on dark */
   --wine: #9b2226;
-  --hair: rgba(255, 255, 255, 0.15);
+  --hair: rgba(55, 32, 52, 0.16); /* dark hairline for light surfaces */
+  --hair-light: rgba(255, 255, 255, 0.16); /* hairline for dark surfaces */
 }
 
 * {
@@ -19,8 +22,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: var(--ink);
-  color: var(--bone);
+  background: var(--paper);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -51,14 +54,19 @@ a {
   font-weight: 300;
 }
 
-/* Thin gold rule */
+/* Thin rules */
 .gold-rule {
   height: 1px;
   background: var(--gold);
   border: 0;
 }
+.gold-rule-bright {
+  height: 1px;
+  background: var(--goldlt);
+  border: 0;
+}
 
-/* Hairline border utility (0.5px feel) */
+/* Hairline borders — dark by default (light surfaces) */
 .hairline {
   border: 0.5px solid var(--hair);
 }
@@ -69,7 +77,18 @@ a {
   border-bottom: 0.5px solid var(--hair);
 }
 
+/* Hairline borders for dark surfaces (header, hero, dark cards) */
+.hairline-light {
+  border: 0.5px solid var(--hair-light);
+}
+.hairline-light-t {
+  border-top: 0.5px solid var(--hair-light);
+}
+.hairline-light-b {
+  border-bottom: 0.5px solid var(--hair-light);
+}
+
 ::selection {
   background: var(--gold);
-  color: var(--ink);
+  color: var(--paper);
 }

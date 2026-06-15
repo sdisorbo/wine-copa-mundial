@@ -16,7 +16,7 @@ function rowAccent(position: number, isWildcard: boolean): string {
     case 2:
       return "border-l-2 border-gold";
     case 3:
-      return isWildcard ? "border-l-2 border-wildcard" : "border-l-2 border-bone/15";
+      return isWildcard ? "border-l-2 border-wildcard" : "border-l-2 border-ink/15";
     case 4:
       return "border-l-2 border-eliminate";
     default:
@@ -34,7 +34,7 @@ function statusLabel(position: number, isWildcard: boolean): string {
 function statusColor(position: number, isWildcard: boolean): string {
   if (position === 1 || position === 2) return "text-advance";
   if (position === 3 && isWildcard) return "text-wildcard";
-  if (position === 3) return "text-bone/40";
+  if (position === 3) return "text-ink/45";
   return "text-eliminate";
 }
 
@@ -45,19 +45,19 @@ export default function GroupTable({ group }: { group: Group }) {
   const wc = mounted ? wildcardSlugs(scores) : new Set<string>();
 
   return (
-    <div className="hairline">
+    <div className="hairline bg-white">
       {/* Header */}
       <div className="px-5 py-4 hairline-b flex items-baseline justify-between">
         <div>
-          <span className="heading text-gold text-lg">Group {group}</span>
-          <span className="ml-3 text-xs uppercase tracking-cinematic text-bone/40">
+          <span className="heading text-wine text-lg">Group {group}</span>
+          <span className="ml-3 text-xs uppercase tracking-cinematic text-ink/50">
             {GROUP_NAMES[group]}
           </span>
         </div>
       </div>
 
       {/* Column heads */}
-      <div className="grid grid-cols-[1fr_2.5rem_2.5rem_2.5rem_2.5rem] gap-1 px-5 py-3 text-[10px] uppercase tracking-cinematic text-bone/40 hairline-b">
+      <div className="grid grid-cols-[1fr_2.5rem_2.5rem_2.5rem_2.5rem] gap-1 px-5 py-3 text-[10px] uppercase tracking-cinematic text-ink/50 hairline-b">
         <span>Nation</span>
         <span className="text-right">Pts</span>
         <span className="text-right">1st</span>
@@ -80,7 +80,7 @@ export default function GroupTable({ group }: { group: Group }) {
               <div className="min-w-0">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl leading-none">{s.team.flag}</span>
-                  <span className="truncate text-sm text-bone">
+                  <span className="truncate text-sm text-ink">
                     {s.team.name}
                   </span>
                 </div>
@@ -93,16 +93,16 @@ export default function GroupTable({ group }: { group: Group }) {
                   {hasData ? statusLabel(s.position, isWC) : "Awaiting"}
                 </span>
               </div>
-              <span className="text-right text-base text-gold tabular-nums">
+              <span className="text-right text-base text-wine tabular-nums">
                 {hasData ? s.points : "—"}
               </span>
-              <span className="text-right text-sm text-bone/70 tabular-nums">
+              <span className="text-right text-sm text-ink/70 tabular-nums">
                 {hasData ? s.firstVotes : "—"}
               </span>
-              <span className="text-right text-sm text-bone/70 tabular-nums">
+              <span className="text-right text-sm text-ink/70 tabular-nums">
                 {hasData ? s.secondVotes : "—"}
               </span>
-              <span className="text-right text-sm text-bone/70 tabular-nums">
+              <span className="text-right text-sm text-ink/70 tabular-nums">
                 {hasData ? s.thirdVotes : "—"}
               </span>
             </div>
@@ -111,7 +111,7 @@ export default function GroupTable({ group }: { group: Group }) {
       </div>
 
       {/* Footer ballots count */}
-      <div className="px-5 py-3 hairline-t text-[10px] uppercase tracking-cinematic text-bone/30">
+      <div className="px-5 py-3 hairline-t text-[10px] uppercase tracking-cinematic text-ink/45">
         {hasData
           ? `${standings[0]?.ballots ?? 0} ballot${
               (standings[0]?.ballots ?? 0) === 1 ? "" : "s"

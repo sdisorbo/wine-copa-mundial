@@ -40,17 +40,17 @@ export default function AboutPage() {
       {SECTIONS.map((s, i) => (
         <section
           key={s.n}
-          className={`hairline-t ${i % 2 === 1 ? "bg-inkdeep" : ""}`}
+          className={`hairline-t ${i % 2 === 1 ? "bg-paper2" : ""}`}
         >
           <div className="max-w-page mx-auto px-6 py-20 grid md:grid-cols-[200px_1fr] gap-10 md:gap-20 items-start">
-            <div className="heading text-7xl md:text-8xl text-gold/30 leading-none">
+            <div className="heading text-7xl md:text-8xl text-wine/30 leading-none">
               {s.n}
             </div>
             <div>
-              <h2 className="heading text-2xl md:text-4xl text-bone mb-8">
+              <h2 className="heading text-2xl md:text-4xl text-ink mb-8">
                 {s.title}
               </h2>
-              <div className="space-y-5 text-bone/70 text-lg max-w-2xl">
+              <div className="space-y-5 text-ink/75 text-lg max-w-2xl">
                 {s.body.map((p, j) => (
                   <p key={j}>{p}</p>
                 ))}
@@ -63,18 +63,18 @@ export default function AboutPage() {
       {/* Scoring quick-reference */}
       <section className="hairline-t">
         <div className="max-w-page mx-auto px-6 py-20">
-          <p className="text-xs uppercase tracking-wide2 text-gold/80 mb-10">
+          <p className="text-xs uppercase tracking-wide2 text-wine mb-10">
             Points at a glance
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[rgba(255,255,255,0.15)] hairline">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[rgba(55,32,52,0.16)] hairline">
             {[
               { pts: "3", label: "First-place vote" },
               { pts: "2", label: "Second-place vote" },
               { pts: "1", label: "Third-place vote" },
             ].map((r) => (
-              <div key={r.pts} className="bg-ink p-10 text-center">
-                <div className="heading text-6xl text-gold">{r.pts}</div>
-                <div className="text-xs uppercase tracking-cinematic text-bone/50 mt-4">
+              <div key={r.pts} className="bg-paper2 p-10 text-center">
+                <div className="heading text-6xl text-wine">{r.pts}</div>
+                <div className="text-xs uppercase tracking-cinematic text-ink/55 mt-4">
                   {r.label}
                 </div>
               </div>
