@@ -28,7 +28,7 @@ export function teamImage(slug: string): string | undefined {
 export const TEAM_MAPS: Record<string, string> = {
   italy: "/images/italy-map.jpg",
   france: "/images/france-map.jpg",
-  portugal: "/images/portugal-map.jpeg",
+  portugal: "/images/portugal-map.jpg",
   germany: "/images/germany-map.jpg",
   argentina: "/images/argentina-map.jpg",
   chile: "/images/chile-map.jpg",
