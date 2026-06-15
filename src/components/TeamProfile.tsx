@@ -14,7 +14,7 @@ import {
 } from "@/lib/storage";
 import { getTeam, GROUP_NAMES } from "@/config/teams";
 import { countryColor } from "@/config/colors";
-import { teamImage } from "@/config/images";
+import { teamImage, teamMap } from "@/config/images";
 import { groupStandings, hasGroupData } from "@/lib/scoring";
 
 const BUDGET = 100;
@@ -43,6 +43,7 @@ export default function TeamProfile({ slug }: { slug: string }) {
 
   const accent = countryColor(slug);
   const backdrop = teamImage(slug);
+  const map = teamMap(slug);
   const isAdmin = session?.role === "admin";
   const isOwner = session?.role === "team" && session.team === slug;
   const canSee = mounted && (isAdmin || isOwner);
@@ -234,6 +235,30 @@ export default function TeamProfile({ slug }: { slug: string }) {
           </aside>
         </div>
       </section>
+
+      {/* WINE MAP */}
+      {map && (
+        <section className="px-6 pb-24">
+          <div className="max-w-page mx-auto hairline-t pt-12">
+            <p className="text-xs uppercase tracking-wide2 text-wine mb-2">
+              Wine Map
+            </p>
+            <p className="text-ink/55 text-sm mb-8 max-w-2xl">
+              The regions and grapes of {team.name} — the territory behind the
+              bottles.
+            </p>
+            <div className="hairline bg-white p-3 md:p-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={map}
+                alt={`Wine regions of ${team.name}`}
+                loading="lazy"
+                className="block w-full h-auto"
+              />
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
