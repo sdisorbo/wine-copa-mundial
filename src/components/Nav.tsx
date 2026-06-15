@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession, clearSession } from "@/lib/storage";
 import { getTeam } from "@/config/teams";
+import Flag from "@/components/Flag";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -68,12 +69,17 @@ export default function Nav() {
         <div className="hidden md:flex items-center gap-4">
           {loggedIn ? (
             <>
-              <span className="text-xs uppercase tracking-cinematic text-goldlt">
-                {session?.role === "admin"
-                  ? "Admin"
-                  : team
-                  ? `${team.flag} ${team.name}`
-                  : "Team"}
+              <span className="text-xs uppercase tracking-cinematic text-goldlt flex items-center gap-1.5">
+                {session?.role === "admin" ? (
+                  "Admin"
+                ) : team ? (
+                  <>
+                    <Flag slug={team.slug} className="w-4" />
+                    {team.name}
+                  </>
+                ) : (
+                  "Team"
+                )}
               </span>
               <button
                 onClick={handleLogout}

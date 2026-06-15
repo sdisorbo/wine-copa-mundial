@@ -7,7 +7,8 @@ import {
   type MatchView,
   type Round,
 } from "@/lib/voting";
-import { teamFlag, teamName } from "@/lib/scoring";
+import { teamName } from "@/lib/scoring";
+import Flag from "@/components/Flag";
 
 function Column({
   title,
@@ -55,7 +56,11 @@ function SlotRow({
   const inner = (
     <>
       <span className="flex items-center gap-3 min-w-0">
-        <span className="text-xl leading-none">{has ? teamFlag(slug!) : "🏳️"}</span>
+        {has ? (
+          <Flag slug={slug!} className="w-6 shrink-0" />
+        ) : (
+          <span className="text-base leading-none">🏳️</span>
+        )}
         <span className="truncate text-sm">{has ? teamName(slug!) : "TBD"}</span>
         {myPick && (
           <span className="text-[8px] uppercase tracking-cinematic text-wine border border-wine/40 rounded-full px-1.5 py-0.5">
@@ -242,8 +247,9 @@ export default function Bracket() {
             <p className="text-[10px] uppercase tracking-wide2 text-ink/50">
               Champion
             </p>
-            <p className="heading text-2xl text-wine mt-2">
-              {teamFlag(champion)} {teamName(champion)}
+            <p className="heading text-2xl text-wine mt-2 flex items-center justify-center gap-2">
+              <Flag slug={champion} className="w-8" />
+              {teamName(champion)}
             </p>
           </div>
         )}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import PageHeader from "@/components/PageHeader";
+import Flag from "@/components/Flag";
 import { TEAMS, GROUP_NAMES } from "@/config/teams";
 import { countryColor } from "@/config/colors";
 import { teamImage } from "@/config/images";
@@ -39,7 +40,7 @@ export default function TeamsPage() {
                 </>
               )}
               <div className="relative flex items-start justify-between">
-                <span className="text-6xl leading-none drop-shadow">{t.flag}</span>
+                <Flag slug={t.slug} title={t.name} className="w-16 shadow-md" />
                 <span className="text-[10px] uppercase tracking-cinematic text-bone/80 hairline-light rounded-full px-3 py-1">
                   Group {t.group}
                 </span>

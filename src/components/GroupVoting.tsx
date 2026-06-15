@@ -10,6 +10,7 @@ import {
   getTeam,
   type Group,
 } from "@/config/teams";
+import Flag from "@/components/Flag";
 
 export default function GroupVoting() {
   const { session, mounted } = useSession();
@@ -137,7 +138,7 @@ function RankForm({
           className="flex items-center justify-between hairline px-3 py-2"
         >
           <span className="flex items-center gap-2 text-sm text-ink">
-            <span className="text-lg">{t.flag}</span>
+            <Flag slug={t.slug} className="w-5" />
             {t.name}
           </span>
           <select

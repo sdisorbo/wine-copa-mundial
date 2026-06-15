@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { TEAMS, ADMIN_PIN, getTeam } from "@/config/teams";
 import { countryColor } from "@/config/colors";
+import Flag from "@/components/Flag";
 import { setSession } from "@/lib/storage";
 
 const ADMIN_VALUE = "__admin__";
@@ -58,8 +59,15 @@ export default function LoginPage() {
         className="w-full max-w-md hairline bg-white p-8 md:p-12"
         style={{ borderTop: `2px solid ${accent}` }}
       >
-        <p className="text-xs uppercase tracking-wide2 text-wine mb-4">
-          {team ? `${team.flag} ${team.name}` : "Restricted Access"}
+        <p className="text-xs uppercase tracking-wide2 text-wine mb-4 flex items-center gap-2">
+          {team ? (
+            <>
+              <Flag slug={team.slug} className="w-5" />
+              {team.name}
+            </>
+          ) : (
+            "Restricted Access"
+          )}
         </p>
         <h1 className="heading text-3xl md:text-4xl text-ink">Team Login</h1>
         <div className="h-px w-16 mt-6 mb-10" style={{ background: accent }} />
@@ -80,7 +88,7 @@ export default function LoginPage() {
               <option value="">Select team…</option>
               {TEAMS.map((t) => (
                 <option key={t.slug} value={t.slug}>
-                  {t.flag} {t.name} — Group {t.group}
+                  {t.name} — Group {t.group}
                 </option>
               ))}
               <option value={ADMIN_VALUE}>★ Tournament Admin</option>

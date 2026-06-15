@@ -3,6 +3,7 @@
 import { useVoting } from "@/lib/voting";
 import { type Standing } from "@/lib/scoring";
 import { GROUP_NAMES, type Group } from "@/config/teams";
+import Flag from "@/components/Flag";
 
 function rowAccent(position: number, isWildcard: boolean): string {
   switch (position) {
@@ -73,7 +74,7 @@ export default function GroupTable({ group }: { group: Group }) {
             >
               <div className="min-w-0">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl leading-none">{s.team.flag}</span>
+                  <Flag slug={s.slug} title={s.team.name} className="w-7 shrink-0" />
                   <span className="truncate text-sm text-ink">
                     {s.team.name}
                   </span>

@@ -15,6 +15,7 @@ import { useVoting } from "@/lib/voting";
 import { getTeam, GROUP_NAMES } from "@/config/teams";
 import { countryColor } from "@/config/colors";
 import { teamImage, teamMap } from "@/config/images";
+import Flag from "@/components/Flag";
 
 const BUDGET = 100;
 
@@ -74,9 +75,11 @@ export default function TeamProfile({ slug }: { slug: string }) {
           </>
         )}
         <div className="relative max-w-page mx-auto">
-          <span className="text-7xl md:text-8xl leading-none block">
-            {team.flag}
-          </span>
+          <Flag
+            slug={slug}
+            title={team.name}
+            className="w-28 md:w-40 shadow-lg ring-1 ring-black/10"
+          />
           <h1 className="heading text-4xl md:text-6xl text-bone mt-8">
             {team.name}
           </h1>
