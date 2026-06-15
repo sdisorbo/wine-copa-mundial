@@ -85,7 +85,7 @@ export default function Nav() {
           ) : (
             <Link
               href="/login"
-              className="text-xs uppercase tracking-cinematic px-5 py-2 hairline-light hover:border-goldlt hover:text-goldlt transition-colors"
+              className="text-xs uppercase tracking-cinematic px-5 py-2 text-bone/85 hairline-light hover:border-goldlt hover:text-goldlt transition-colors"
             >
               Login
             </Link>

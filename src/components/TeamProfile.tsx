@@ -98,7 +98,7 @@ export default function TeamProfile({ slug }: { slug: string }) {
       </section>
 
       {/* CONTENT GRID */}
-      <section className="px-6 pb-24">
+      <section className="px-6 pt-12 md:pt-16 pb-24">
         <div className="max-w-page mx-auto grid lg:grid-cols-[1fr_320px] gap-12">
           {/* LEFT — wines */}
           <div>
