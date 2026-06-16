@@ -1,6 +1,6 @@
 # Wine Copa Mundial 🍷🏆
 
-**12 Nations. One Champion.** A blind-tasting world cup of wine — a single static
+**12 Nations. One Champion.** A world cup of wine — a single static
 Next.js app with no backend. All tournament state (logins, wine lineups, group
 scores, bracket results) lives in the browser's `localStorage`.
 
@@ -22,8 +22,9 @@ runner-up, purple = wildcard, red = eliminated).
 | Route             | Purpose                                                        |
 | ----------------- | ------------------------------------------------------------- |
 | `/`               | Cinematic home — hero, format teaser, flag strip              |
-| `/about`          | The Format · The Rules · The Scoring                          |
-| `/groups`         | Three group tables (admin can enter ballots here)             |
+| `/about`          | The Format · Rules · Scoring · Prize                          |
+| `/faq`            | Event FAQ (attendance, fees, dress, dates, logins)            |
+| `/groups`         | Three live group leaderboards + team ballots / admin controls |
 | `/bracket`        | QF → SF → Final ladder (admin advances winners)               |
 | `/teams`          | Directory of all 12 nations                                   |
 | `/teams/[slug]`   | Team profile — wine lineup, budget, group results, edit form  |
@@ -112,4 +113,4 @@ Push to GitHub and import the repo at [vercel.com/new](https://vercel.com/new).
 
 ---
 
-_A blind tasting tournament · Est. 2026_
+_A wine tasting tournament · Est. 2026_

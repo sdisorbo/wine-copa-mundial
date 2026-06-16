@@ -14,6 +14,7 @@ const LINKS = [
   { href: "/bracket", label: "Bracket" },
   { href: "/teams", label: "Teams" },
   { href: "/about", label: "About" },
+  { href: "/faq", label: "FAQ" },
 ];
 
 export default function Nav() {

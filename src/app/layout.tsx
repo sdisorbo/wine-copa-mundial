@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Wine Copa Mundial",
-  description: "12 Nations. One Champion. A blind-tasting world cup of wine.",
+  description: "12 Nations. One Champion. A world cup of wine.",
 };
 
 export default function RootLayout({

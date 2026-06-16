@@ -24,7 +24,7 @@ export default function Home() {
 
         <div className="relative z-10 text-center px-6">
           <p className="text-xs md:text-sm uppercase tracking-wide2 text-goldlt mb-8">
-            Blind Tasting · World Cup
+            Wine · World Cup
           </p>
           <h1 className="heading text-5xl sm:text-7xl md:text-8xl text-bone leading-[0.95]">
             Wine Copa
@@ -63,20 +63,19 @@ export default function Home() {
               <br />
               Thirty-six bottles.
               <br />
-              One blind verdict.
+              One worthy champion.
             </h2>
           </div>
           <div className="flex flex-col justify-center gap-6 text-ink/75 text-lg font-light">
             <p>
               Two-person teams represent the great wine nations of the world.
               Each fields three bottles under a strict hundred-dollar budget,
-              poured blind before an unsuspecting room.
+              poured for the whole room to taste and judge.
             </p>
             <p>
-              Guests rank what they taste — not what they read. Points crown the
-              group winners, wildcards rescue the unlucky, and eight survivors
-              advance to a single-elimination bracket decided two new wines at a
-              time.
+              Everyone ranks what&apos;s in the glass. Points crown the group
+              winners, wildcards rescue the unlucky, and eight survivors advance
+              to a single-elimination bracket decided two new wines at a time.
             </p>
             <Link
               href="/about"

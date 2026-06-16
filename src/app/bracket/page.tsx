@@ -47,7 +47,7 @@ export default function BracketPage() {
             Seeding — A1 vs WC2 · B1 vs A2 · C1 vs B2 · WC1 vs C2. Each round, the
             admin opens voting; every team casts two votes in each matchup it is
             not playing in. Most votes advances; the admin breaks ties.
-            Elimination rounds feature 2 new wines per match, tasted blind.
+            Elimination rounds feature 2 new wines per match.
           </p>
         </div>
       </section>

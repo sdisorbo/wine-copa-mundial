@@ -18,6 +18,7 @@ export default function Footer() {
             { href: "/bracket", label: "Bracket" },
             { href: "/teams", label: "Teams" },
             { href: "/about", label: "About" },
+            { href: "/faq", label: "FAQ" },
             { href: "/login", label: "Login" },
           ].map((l) => (
             <Link
@@ -32,7 +33,7 @@ export default function Footer() {
       </div>
       <div className="max-w-page mx-auto px-6 pb-8">
         <p className="text-[10px] uppercase tracking-cinematic text-ink/40">
-          A blind tasting tournament · Est. 2026
+          A wine tasting tournament · Est. 2026
         </p>
       </div>
     </footer>
