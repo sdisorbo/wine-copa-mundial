@@ -41,6 +41,7 @@ export interface MatchVote {
   round: Round;
   match_id: string;
   voter_team_slug: string;
+  entry: number;
   pick_slug: string;
 }
 
@@ -74,7 +75,12 @@ interface VotingValue {
   champion?: string;
 
   ballotFor: (teamSlug: string, grp: Group, entry: number) => string[] | null;
-  voteFor: (teamSlug: string, round: Round, matchId: string) => string | null;
+  voteFor: (
+    teamSlug: string,
+    round: Round,
+    matchId: string,
+    entry: number
+  ) => string | null;
 
   // team actions
   castGroupBallot: (
@@ -87,6 +93,7 @@ interface VotingValue {
     teamSlug: string,
     round: Round,
     matchId: string,
+    entry: number,
     pick: string
   ) => Promise<void>;
 
@@ -205,7 +212,7 @@ export function VotingProvider({ children }: { children: React.ReactNode }) {
         supabase.from("group_ballots").select("team_slug,grp,entry,ranking"),
         supabase
           .from("match_votes")
-          .select("round,match_id,voter_team_slug,pick_slug"),
+          .select("round,match_id,voter_team_slug,entry,pick_slug"),
         supabase.from("match_overrides").select("round,match_id,winner_slug"),
       ]);
 
@@ -332,12 +339,13 @@ export function VotingProvider({ children }: { children: React.ReactNode }) {
   );
 
   const voteFor = useCallback(
-    (teamSlug: string, round: Round, matchId: string) =>
+    (teamSlug: string, round: Round, matchId: string, entry: number) =>
       votes.find(
         (v) =>
           v.voter_team_slug === teamSlug &&
           v.round === round &&
-          v.match_id === matchId
+          v.match_id === matchId &&
+          v.entry === entry
       )?.pick_slug ?? null,
     [votes]
   );
@@ -360,17 +368,24 @@ export function VotingProvider({ children }: { children: React.ReactNode }) {
   );
 
   const castMatchVote = useCallback(
-    async (teamSlug: string, round: Round, matchId: string, pick: string) => {
+    async (
+      teamSlug: string,
+      round: Round,
+      matchId: string,
+      entry: number,
+      pick: string
+    ) => {
       if (!supabase) return;
       const { error } = await supabase.from("match_votes").upsert(
         {
           round,
           match_id: matchId,
           voter_team_slug: teamSlug,
+          entry,
           pick_slug: pick,
           updated_at: new Date().toISOString(),
         },
-        { onConflict: "round,match_id,voter_team_slug" }
+        { onConflict: "round,match_id,voter_team_slug,entry" }
       );
       if (error) throw new Error(error.message);
       await refetch();

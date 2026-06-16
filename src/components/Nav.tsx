@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession, clearSession } from "@/lib/storage";
@@ -39,11 +40,18 @@ export default function Nav() {
 
       <div className="max-w-page mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
-          className="heading text-bone text-lg tracking-[0.3em] font-normal"
-        >
-          WCM
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <Image
+            src="/images/logo.png"
+            alt="Wine Copa Mundial"
+            width={40}
+            height={40}
+            priority
+            className="h-9 w-9 object-contain"
+          />
+          <span className="heading text-bone text-sm tracking-[0.25em] font-normal hidden sm:inline group-hover:text-goldlt transition-colors">
+            Wine Copa Mundial
+          </span>
         </Link>
 
         {/* Center links — desktop */}

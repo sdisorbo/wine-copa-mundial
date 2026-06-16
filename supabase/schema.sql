@@ -34,18 +34,39 @@ create table if not exists group_ballots (
 );
 
 -- ---------------------------------------------------------------------------
--- Bracket matchup votes: one vote per team per matchup (teams cannot vote on a
--- matchup they are playing in).
+-- Bracket matchup votes: each team casts TWO votes (its two members) per
+-- matchup it is not playing in.
 -- ---------------------------------------------------------------------------
 create table if not exists match_votes (
   id uuid primary key default gen_random_uuid(),
   round text not null check (round in ('qf', 'sf', 'final')),
   match_id text not null,                         -- qf1..qf4, sf1, sf2, final
   voter_team_slug text not null,
+  entry int not null default 1 check (entry in (1, 2)),  -- which of the two members
   pick_slug text not null,
   updated_at timestamptz not null default now(),
-  unique (round, match_id, voter_team_slug)
+  unique (round, match_id, voter_team_slug, entry)
 );
+
+-- Migration for databases created before the two-votes-per-round change:
+alter table match_votes
+  add column if not exists entry int not null default 1 check (entry in (1, 2));
+do $$
+begin
+  if exists (
+    select 1 from pg_constraint
+    where conname = 'match_votes_round_match_id_voter_team_slug_key'
+  ) then
+    alter table match_votes drop constraint match_votes_round_match_id_voter_team_slug_key;
+  end if;
+  if not exists (
+    select 1 from pg_constraint where conname = 'match_votes_round_match_entry_key'
+  ) then
+    alter table match_votes
+      add constraint match_votes_round_match_entry_key
+      unique (round, match_id, voter_team_slug, entry);
+  end if;
+end $$;
 
 -- ---------------------------------------------------------------------------
 -- Admin tie-break / manual winner override for a matchup.

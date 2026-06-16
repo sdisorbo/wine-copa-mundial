@@ -62,9 +62,9 @@ database. The admin drives the flow with open/close controls:
    `/groups` leaderboard updates live. When the admin **closes** group voting,
    the standings lock and the 8-team bracket is set.
 2. **Bracket rounds** — for each round (QF → SF → Final) the admin opens voting;
-   every team casts **one vote per matchup it is not playing in**. Most votes
-   advances; **the admin breaks ties** (or sets a winner if a round closes with
-   no votes). Closing a round seeds the next.
+   every team casts **two votes per matchup it is not playing in** (its two
+   members). Most votes advances; **the admin breaks ties** (or sets a winner if
+   a round closes with no votes). Closing a round seeds the next.
 3. **Reset** — the admin can reset a single phase or the entire tournament.
 
 Scoring (group stage): a 1st-place rank = 3 pts, 2nd = 2, 3rd = 1. Top two per

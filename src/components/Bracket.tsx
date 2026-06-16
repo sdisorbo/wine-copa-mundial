@@ -32,18 +32,12 @@ function SlotRow({
   label,
   votes,
   isWinner,
-  canVote,
-  myPick,
-  onVote,
   gold,
 }: {
   slug?: string;
   label: string;
   votes: number;
   isWinner: boolean;
-  canVote: boolean;
-  myPick: boolean;
-  onVote: () => void;
   gold?: boolean;
 }) {
   const has = !!slug;
@@ -53,8 +47,10 @@ function SlotRow({
       : "bg-advance/10 text-advance"
     : "text-ink/80";
 
-  const inner = (
-    <>
+  return (
+    <div
+      className={`flex items-center justify-between px-4 py-3 ${winState}`}
+    >
       <span className="flex items-center gap-3 min-w-0">
         {has ? (
           <Flag slug={slug!} className="w-6 shrink-0" />
@@ -62,11 +58,6 @@ function SlotRow({
           <span className="text-base leading-none">🏳️</span>
         )}
         <span className="truncate text-sm">{has ? teamName(slug!) : "TBD"}</span>
-        {myPick && (
-          <span className="text-[8px] uppercase tracking-cinematic text-wine border border-wine/40 rounded-full px-1.5 py-0.5">
-            Your pick
-          </span>
-        )}
       </span>
       <span className="flex items-center gap-3 shrink-0">
         <span className="text-sm tabular-nums text-ink/60">{votes}</span>
@@ -74,31 +65,56 @@ function SlotRow({
           {isWinner ? "ADV" : label}
         </span>
       </span>
-    </>
+    </div>
   );
+}
 
-  const base =
-    "flex items-center justify-between px-4 py-3 transition-colors w-full text-left";
+// Two ballots per matchup (a team's two members), shown when eligible.
+function VoteBox({ m, myTeam }: { m: MatchView; myTeam: string }) {
+  const { castMatchVote, voteFor } = useVoting();
+  const choices = [m.home as string, m.away as string];
 
-  if (canVote && has) {
-    return (
-      <button
-        onClick={onVote}
-        className={`${base} ${winState} ${
-          myPick ? "" : "hover:bg-ink/5"
-        } cursor-pointer`}
-      >
-        {inner}
-      </button>
-    );
-  }
-  return <div className={`${base} ${winState}`}>{inner}</div>;
+  return (
+    <div className="hairline px-3 py-3 space-y-2">
+      <span className="block text-[9px] uppercase tracking-cinematic text-ink/50">
+        Your two votes
+      </span>
+      {[1, 2].map((entry) => {
+        const pick = voteFor(myTeam, m.round, m.matchId, entry);
+        return (
+          <div key={entry} className="flex items-center gap-2">
+            <span className="text-[9px] uppercase tracking-cinematic text-ink/45 w-12 shrink-0">
+              Ballot {entry}
+            </span>
+            {choices.map((slug) => {
+              const active = pick === slug;
+              return (
+                <button
+                  key={slug}
+                  onClick={() =>
+                    castMatchVote(myTeam, m.round, m.matchId, entry, slug)
+                  }
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 text-[11px] transition-colors ${
+                    active
+                      ? "bg-advance/10 text-advance border border-advance/40"
+                      : "hairline hover:bg-ink/5"
+                  }`}
+                >
+                  <Flag slug={slug} className="w-4 shrink-0" />
+                  <span className="truncate">{teamName(slug)}</span>
+                </button>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 function Match({ m, gold }: { m: MatchView; gold?: boolean }) {
   const { session } = useSession();
-  const { phases, castMatchVote, setOverride, clearOverride, voteFor } =
-    useVoting();
+  const { phases, setOverride, clearOverride } = useVoting();
 
   const isAdmin = session?.role === "admin";
   const myTeam = session?.role === "team" ? session.team : null;
@@ -108,12 +124,6 @@ function Match({ m, gold }: { m: MatchView; gold?: boolean }) {
   const eligible =
     !!myTeam && phaseOpen && !!m.home && !!m.away && canVoteMatch(myTeam, m);
   const iAmIn = !!myTeam && (myTeam === m.home || myTeam === m.away);
-  const myPick = myTeam ? voteFor(myTeam, m.round, m.matchId) : null;
-
-  function vote(slug?: string) {
-    if (!myTeam || !slug) return;
-    castMatchVote(myTeam, m.round, m.matchId, slug);
-  }
 
   // Admin needs to resolve when the round is closed (or tied) with no winner.
   const needsAdmin =
@@ -131,9 +141,6 @@ function Match({ m, gold }: { m: MatchView; gold?: boolean }) {
           label={m.homeLabel}
           votes={m.homeVotes}
           isWinner={m.winner === m.home && !!m.home}
-          canVote={eligible}
-          myPick={!!myPick && myPick === m.home}
-          onVote={() => vote(m.home)}
           gold={gold}
         />
         <SlotRow
@@ -141,12 +148,11 @@ function Match({ m, gold }: { m: MatchView; gold?: boolean }) {
           label={m.awayLabel}
           votes={m.awayVotes}
           isWinner={m.winner === m.away && !!m.away}
-          canVote={eligible}
-          myPick={!!myPick && myPick === m.away}
-          onVote={() => vote(m.away)}
           gold={gold}
         />
       </div>
+
+      {eligible && myTeam && <VoteBox m={m} myTeam={myTeam} />}
 
       {/* contextual footer */}
       <div className="px-1 flex items-center justify-between gap-2 min-h-[16px]">
