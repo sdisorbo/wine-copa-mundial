@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import Bracket from "@/components/Bracket";
 import PhaseBanner from "@/components/PhaseBanner";
+import RoundController from "@/components/RoundController";
 import AdminVotingControls from "@/components/AdminVotingControls";
 
 export const metadata: Metadata = {
@@ -12,6 +13,12 @@ export default function BracketPage() {
   return (
     <>
       <PageHeader title="The Bracket" kicker="Eight Nations · Single Elimination" />
+
+      <section className="px-6">
+        <div className="max-w-page mx-auto pb-8">
+          <RoundController />
+        </div>
+      </section>
 
       <section className="px-6">
         <div className="max-w-page mx-auto grid sm:grid-cols-3 gap-4 pb-10">

@@ -3,6 +3,7 @@ import PageHeader from "@/components/PageHeader";
 import GroupTable from "@/components/GroupTable";
 import GroupVoting from "@/components/GroupVoting";
 import AdminVotingControls from "@/components/AdminVotingControls";
+import RoundController from "@/components/RoundController";
 import PhaseBanner from "@/components/PhaseBanner";
 import { GROUPS } from "@/config/teams";
 
@@ -21,6 +22,13 @@ export default function GroupsPage() {
   return (
     <>
       <PageHeader title="Group Stage" kicker="Three Groups · Twelve Nations" />
+
+      {/* Guided progression */}
+      <section className="px-6">
+        <div className="max-w-page mx-auto pb-8">
+          <RoundController />
+        </div>
+      </section>
 
       {/* Status + legend */}
       <section className="px-6">
